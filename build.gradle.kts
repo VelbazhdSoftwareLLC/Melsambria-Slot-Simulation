@@ -5,7 +5,7 @@ plugins {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(26))
     }
 }
 
@@ -15,4 +15,12 @@ application {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("io.jenetics:jenetics:9.0.0")
 }

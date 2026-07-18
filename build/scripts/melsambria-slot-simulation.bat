@@ -70,7 +70,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\melsambria-slot-simulation.jar
+set CLASSPATH=%APP_HOME%\lib\melsambria-slot-simulation.jar;%APP_HOME%\lib\jenetics-9.0.0.jar
 
 
 @rem Execute melsambria-slot-simulation

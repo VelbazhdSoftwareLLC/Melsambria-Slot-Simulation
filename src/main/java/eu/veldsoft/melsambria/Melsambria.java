@@ -430,10 +430,7 @@ public class Melsambria {
 		statistics.freeGamesNumber = 0;
 	}
 
-	public void simulate(Model model, Statistics statistics) {
-		this.model = model;
-		this.statistics = statistics;
-
+	public void simulate() {
 		int[][] view = {
 			{ -1, -1, -1 },
 			{ -1, -1, -1 },
@@ -452,6 +449,11 @@ public class Melsambria {
 				singleBaseGame(view);
 			}
 		}
+	}
+
+	public void simulate(Model model, Statistics statistics) {
+		this.model = model;
+		this.statistics = statistics;
 	}
 
 	public void simulate(String[] args) {
