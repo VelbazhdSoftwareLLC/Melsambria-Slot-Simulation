@@ -1,3 +1,5 @@
+package eu.veldsoft.melsambria;
+
 public class Main {
 	public static void main(String[] args) {
 		Melsambria game = new Melsambria();

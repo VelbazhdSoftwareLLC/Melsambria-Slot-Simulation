@@ -1,3 +1,5 @@
+package eu.veldsoft.melsambria;
+
 import java.security.SecureRandom;
 import java.util.function.ToDoubleFunction;
 
