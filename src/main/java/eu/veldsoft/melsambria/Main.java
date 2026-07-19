@@ -2,6 +2,8 @@ package eu.veldsoft.melsambria;
 
 import io.jenetics.IntegerChromosome;
 import io.jenetics.IntegerGene;
+import io.jenetics.Mutator;
+import io.jenetics.UniformCrossover;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Engine;
 import io.jenetics.engine.EvolutionResult;
@@ -59,7 +61,12 @@ public class Main {
 		                                    IntegerChromosome.of(0, unique.size() - 1, values.size()));
 
 		Engine<IntegerGene, Integer> engine = Engine.builder(Main::evaluation, factory)
-		                                      .populationSize(population.size()).build();
+		                                      .populationSize(population.size())
+		                                      .alterers(
+		                                              new UniformCrossover<>(0.5),
+		                                              new Mutator<>(0.05)
+		                                      )
+		                                      .build();
 
 		Genotype<IntegerGene> result = engine.stream(population)
 		                               .limit(100).collect(EvolutionResult.toBestGenotype());
