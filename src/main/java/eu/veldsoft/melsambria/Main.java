@@ -77,6 +77,14 @@ public class Main {
 		}).
 		collect(EvolutionResult.toBestGenotype());
 
-		System.out.println(result);
+		for(int i = 0, index=0; i < game.model.baseReels.length; i++) {
+			for(int j = 0; j < game.model.baseReels[i].length; j++, index++) {
+				game.model.baseReels[i][j] = result.chromosome().
+				                             as(IntegerChromosome.class).get(index).intValue();
+			}
+		}
+		System.out.println(Arrays.deepToString(game.model.baseReels).
+		                   replace("]", "}").
+		                   replace("[", "{"));
 	}
 }
