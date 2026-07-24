@@ -24,4 +24,12 @@ hs_err_pid*
 replay_pid*
 
 # AStyle
-*.oirg
+*.orig
+
+# Gradle
+.gradle/
+build/
+
+# IDEs
+.vscode/
+bin/

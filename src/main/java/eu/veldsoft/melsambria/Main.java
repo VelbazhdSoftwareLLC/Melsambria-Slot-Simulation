@@ -3,6 +3,7 @@ package eu.veldsoft.melsambria;
 import io.jenetics.IntegerChromosome;
 import io.jenetics.IntegerGene;
 import io.jenetics.Mutator;
+import io.jenetics.Optimize;
 import io.jenetics.UniformCrossover;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Engine;
@@ -18,7 +19,8 @@ public class Main {
 		Melsambria game = new Melsambria();
 		for(int i = 0, index=0; i < game.model.baseReels.length; i++) {
 			for(int j = 0; j < game.model.baseReels[i].length; j++, index++) {
-				game.model.baseReels[i][j] = genotype.chromosome().as(IntegerChromosome.class).get(index).intValue();
+				game.model.baseReels[i][j] = genotype.chromosome().
+				                             as(IntegerChromosome.class).get(index).intValue();
 			}
 		}
 
@@ -62,14 +64,18 @@ public class Main {
 
 		Engine<IntegerGene, Integer> engine = Engine.builder(Main::evaluation, factory)
 		                                      .populationSize(population.size())
+		                                      .optimize(Optimize.MINIMUM)
 		                                      .alterers(
 		                                              new UniformCrossover<>(0.5),
 		                                              new Mutator<>(0.05)
 		                                      )
 		                                      .build();
 
-		Genotype<IntegerGene> result = engine.stream(population)
-		                               .limit(100).collect(EvolutionResult.toBestGenotype());
+		Genotype<IntegerGene> result = engine.stream(population).
+		limit(100).peek(intermediate -> {
+			System.out.println(intermediate.generation() + " " + intermediate.bestFitness());
+		}).
+		collect(EvolutionResult.toBestGenotype());
 
 		System.out.println(result);
 	}
