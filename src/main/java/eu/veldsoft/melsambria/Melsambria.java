@@ -1,6 +1,7 @@
 package eu.veldsoft.melsambria;
 
-import java.security.SecureRandom;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.ToDoubleFunction;
 
 public class Melsambria {
@@ -145,7 +146,8 @@ public class Melsambria {
 		public long numberOfSimulations = 10_000_000L;
 	}
 
-	private static final SecureRandom PRNG = new SecureRandom();
+	//TODO new SecureRandom()
+	private static final Random PRNG = ThreadLocalRandom.current();
 
 	public Model model = new Model();
 	public Statistics statistics = new Statistics();
@@ -206,10 +208,9 @@ public class Melsambria {
 	private int linesWin(int[][] view) {
 		int win = 0;
 
+		int[] line = { -1, -1, -1, -1, -1 };
 		for (int l = 0; l < model.lines.length; l++) {
-			int[] line = { -1, -1, -1, -1, -1 };
-
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < line.length; i++) {
 				int index = model.lines[l][i];
 				line[i] = view[i][index];
 			}
@@ -237,6 +238,13 @@ public class Melsambria {
 			return (0);
 		}
 
+		int[][] copy = {
+			{ -1, -1, -1 },
+			{ -1, -1, -1 },
+			{ -1, -1, -1 },
+			{ -1, -1, -1 },
+			{ -1, -1, -1 },
+		};
 		for (int j = l - 1; j <= l + 1; j++) {
 			for (int i = k - 1; i <= k + 1; i++) {
 				if (i < 0 || i >= 5 || j < 0 || j >= 3) {
@@ -259,13 +267,21 @@ public class Melsambria {
 							continue;
 						}
 
-						int[][] copy = {
-							{ view[0][0], view[0][1], view[0][2] },
-							{ view[1][0], view[1][1], view[1][2] },
-							{ view[2][0], view[2][1], view[2][2] },
-							{ view[3][0], view[3][1], view[3][2] },
-							{ view[4][0], view[4][1], view[4][2] },
-						};
+						copy[0][0] = view[0][0];
+						copy[0][1] = view[0][1];
+						copy[0][2] = view[0][2];
+						copy[1][0] = view[1][0];
+						copy[1][1] = view[1][1];
+						copy[1][2] = view[1][2];
+						copy[2][0] = view[2][0];
+						copy[2][1] = view[2][1];
+						copy[2][2] = view[2][2];
+						copy[3][0] = view[3][0];
+						copy[3][1] = view[3][1];
+						copy[3][2] = view[3][2];
+						copy[4][0] = view[4][0];
+						copy[4][1] = view[4][1];
+						copy[4][2] = view[4][2];
 
 						int swap = copy[i][j];
 						copy[i][j] = copy[m][n];
