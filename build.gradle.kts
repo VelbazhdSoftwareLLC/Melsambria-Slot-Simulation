@@ -23,4 +23,5 @@ repositories {
 
 dependencies {
     implementation("io.jenetics:jenetics:9.0.0")
+    implementation("com.google.googlejavaformat:google-java-format:1.17.0")
 }

@@ -471,6 +471,11 @@ public class Melsambria {
 			} else {
 				singleBaseGame(view);
 			}
+
+			/* It is useless to simulate invalid model. */
+			if(model.valid == false) {
+				return;
+			}
 		}
 	}
 
