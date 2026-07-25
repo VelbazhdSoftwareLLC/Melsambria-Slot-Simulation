@@ -5,6 +5,7 @@ import io.jenetics.IntegerGene;
 import io.jenetics.Mutator;
 import io.jenetics.Optimize;
 import io.jenetics.UniformCrossover;
+import io.jenetics.EliteSelector;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Engine;
 import io.jenetics.engine.EvolutionResult;
@@ -74,6 +75,8 @@ public class Main {
 		Engine<IntegerGene, Integer> engine = Engine.builder(Main::evaluation, factory)
 		                                      .populationSize(population.size())
 		                                      .optimize(Optimize.MINIMUM)
+		                                      .survivorsFraction(0.05)
+		                                      .survivorsSelector(new EliteSelector<>())
 		                                      .alterers(
 		                                              new UniformCrossover<>(0.5),
 		                                              new Mutator<>(0.05)
