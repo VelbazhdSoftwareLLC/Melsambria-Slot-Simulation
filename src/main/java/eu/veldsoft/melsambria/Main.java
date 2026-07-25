@@ -64,7 +64,10 @@ public class Main {
 		                      .map(index -> IntegerGene.of(index, 0, unique.size() - 1))
 		                      .toArray(IntegerGene[]::new);
 
-		for(int i = 1; i < 100; i++) {
+		for(int i = 0; i < 50; i++) {
+			population.add(Genotype.of(IntegerChromosome.of(genes)));
+		}
+		for(int i = 0; i < 50; i++) {
 			population.add(Genotype.of(IntegerChromosome.of(genes)));
 			Collections.shuffle(Arrays.asList(genes));
 		}
@@ -75,8 +78,8 @@ public class Main {
 		Engine<IntegerGene, Integer> engine = Engine.builder(Main::evaluation, factory)
 		                                      .populationSize(population.size())
 		                                      .optimize(Optimize.MINIMUM)
-		                                      .survivorsFraction(0.05)
-		                                      .survivorsSelector(new EliteSelector<>())
+		                                      //   .survivorsFraction(0.05)
+		                                      //   .survivorsSelector(new EliteSelector<>())
 		                                      .alterers(
 		                                              new UniformCrossover<>(0.5),
 		                                              new Mutator<>(0.05)
