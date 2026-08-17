@@ -72,7 +72,7 @@ public class Main {
 		}
 
 		Genotype<IntegerGene> factory = Genotype.of(
-		                                    IntegerChromosome.of(0, unique.size() - 1, values.size()));
+		                                    IntegerChromosome.of(0, unique.size(), values.size()));
 
 		Engine<IntegerGene, Integer> engine = Engine.builder(Main::evaluation, factory)
 		                                      .populationSize(population.size())
