@@ -25,6 +25,8 @@ public class Main {
 			}
 		}
 
+		//TODO ANN for estimation of the RTP by mapping 90-100% to 0.0-1.0 sigmoid function output. The estimated RTP can be used as a fitness value, and only the most promising configurations can be evaluated by a Monte Carlo simulation.
+
 		game.simulate();
 		if(game.model.valid == false) {
 			return Integer.MAX_VALUE;
