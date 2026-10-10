@@ -51,7 +51,7 @@ public class Main {
 
 		return game.score(g -> 10D *
 				Math.abs(0.968D - (double) g.statistics.wonMoney / (double) g.statistics.lostMoney) +
-				1 -
+		// 1 -
 				(double) g.statistics.baseHitFrequency / (double) g.statistics.totalNumberOfGames);
 	}
 
