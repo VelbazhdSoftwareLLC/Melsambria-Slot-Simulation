@@ -3,6 +3,8 @@ package eu.veldsoft.melsambria;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.function.ToDoubleFunction;
+import java.util.random.RandomGenerator;
+import java.util.random.RandomGeneratorFactory;
 
 public class Melsambria {
 	public class Model {
@@ -156,7 +158,10 @@ public class Melsambria {
 		public long numberOfSimulations = 10_000_000L;
 	}
 
-	private static final Random PRNG = new SecureRandom();
+	private static final RandomGenerator.SplittableGenerator FACTORY = RandomGeneratorFactory.<RandomGenerator.SplittableGenerator>of(
+			"L64X256MixRandom").create();
+
+	private final RandomGenerator PRNG = FACTORY.split();
 
 	public Model model = new Model();
 	public Statistics statistics = new Statistics();

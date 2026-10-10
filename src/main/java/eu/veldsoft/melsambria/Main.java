@@ -9,6 +9,7 @@ import io.jenetics.Genotype;
 import io.jenetics.engine.Engine;
 import io.jenetics.engine.EvolutionResult;
 
+import java.io.PrintStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +53,17 @@ public class Main {
 				Math.abs(0.968D - (double) g.statistics.wonMoney / (double) g.statistics.lostMoney) +
 				1 -
 				(double) g.statistics.baseHitFrequency / (double) g.statistics.totalNumberOfGames);
+	}
+
+	private static void print(PrintStream out, Genotype<IntegerGene> solution) {
+		Melsambria game = new Melsambria();
+		for (int i = 0, index = 0; i < game.model.baseReels.length; i++) {
+			for (int j = 0; j < game.model.baseReels[i].length; j++, index++) {
+				game.model.baseReels[i][j] = solution.chromosome().as(IntegerChromosome.class).get(index).intValue();
+			}
+		}
+		out.println(Arrays.deepToString(game.model.baseReels).replace("]", "}").replace("[", "{")
+				.replace("}, {", "},\n\t{").replace("{{", "{\n\t{").replace("}}", "}\n}"));
 	}
 
 	public static void main(String[] args) {
@@ -100,17 +112,12 @@ public class Main {
 				.build();
 
 		Genotype<IntegerGene> result = engine.stream(population).limit(100).peek(intermediate -> {
+			print(System.err, intermediate.bestPhenotype().genotype());
 			System.out.println(LocalTime.now() + "\t" +
 					intermediate.generation() + "\t" +
 					(bestFitness = intermediate.bestFitness()));
 		}).collect(EvolutionResult.toBestGenotype());
 
-		for (int i = 0, index = 0; i < game.model.baseReels.length; i++) {
-			for (int j = 0; j < game.model.baseReels[i].length; j++, index++) {
-				game.model.baseReels[i][j] = result.chromosome().as(IntegerChromosome.class).get(index).intValue();
-			}
-		}
-		System.out.println(Arrays.deepToString(game.model.baseReels).replace("]", "}").replace("[", "{")
-				.replace("}, {", "},\n\t{").replace("{{", "{\n\t{").replace("}}", "}\n}"));
+		print(System.out, result);
 	}
 }
